@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\InputSuaraController;
 use App\Http\Controllers\PaslonController;
 use App\Http\Controllers\ProfileController;
@@ -28,11 +29,8 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/dashboard', function () {
-    return Inertia::render('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
 
@@ -46,6 +44,7 @@ Route::middleware('auth')->group(function () {
 
     // partai dan calon
     Route::get('paslon', [PaslonController::class, 'index'])->name('paslon.index');
+    Route::post('paslon', [PaslonController::class, 'store'])->name('paslon.store');
 
     // input suara
     Route::get('input-suara', [InputSuaraController::class, 'index'])->name('input.suara.index');

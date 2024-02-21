@@ -19,6 +19,7 @@ class KotakSuara extends Model
         'id_tps',
         'chooseable_type',
         'chooseable_id',
+        'suara'
     ];
 
     //! relasi

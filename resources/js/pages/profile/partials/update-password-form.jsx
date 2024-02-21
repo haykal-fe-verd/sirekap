@@ -1,5 +1,9 @@
 import { useRef } from "react";
-import InputError from "@/Components/InputError";
+
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import InputError from "@/components/input-error";
 import InputLabel from "@/Components/InputLabel";
 import PrimaryButton from "@/Components/PrimaryButton";
 import TextInput from "@/Components/TextInput";
@@ -52,19 +56,14 @@ export default function UpdatePasswordForm({ className = "" }) {
                 </h2>
 
                 <p className="mt-1 text-sm text-gray-600">
-                    Ensure your account is using a long, random password to stay
-                    secure.
+                    Pastikan akun anda tetap aman.
                 </p>
             </header>
 
             <form onSubmit={updatePassword} className="mt-6 space-y-6">
                 <div>
-                    <InputLabel
-                        htmlFor="current_password"
-                        value="Current Password"
-                    />
-
-                    <TextInput
+                    <Label htmlFor="current_password">Password Saat Ini </Label>
+                    <Input
                         id="current_password"
                         ref={currentPasswordInput}
                         value={data.current_password}
@@ -83,9 +82,9 @@ export default function UpdatePasswordForm({ className = "" }) {
                 </div>
 
                 <div>
-                    <InputLabel htmlFor="password" value="New Password" />
+                    <Label htmlFor="password">Password Baru </Label>
 
-                    <TextInput
+                    <Input
                         id="password"
                         ref={passwordInput}
                         value={data.password}
@@ -99,12 +98,11 @@ export default function UpdatePasswordForm({ className = "" }) {
                 </div>
 
                 <div>
-                    <InputLabel
-                        htmlFor="password_confirmation"
-                        value="Confirm Password"
-                    />
+                    <Label htmlFor="password_confirmation">
+                        Password Konfirmasi{" "}
+                    </Label>
 
-                    <TextInput
+                    <Input
                         id="password_confirmation"
                         value={data.password_confirmation}
                         onChange={(e) =>
@@ -122,7 +120,9 @@ export default function UpdatePasswordForm({ className = "" }) {
                 </div>
 
                 <div className="flex items-center gap-4">
-                    <PrimaryButton disabled={processing}>Save</PrimaryButton>
+                    <Button type="submit" disabled={processing}>
+                        Save
+                    </Button>
 
                     <Transition
                         show={recentlySuccessful}

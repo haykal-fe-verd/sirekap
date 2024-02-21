@@ -65,6 +65,13 @@ class InputSuaraController extends Controller
             'id_kelurahan' => $request->input('id_kelurahan'),
             'nama_kelurahan' => $request->input('nama_kelurahan'),
             'nomor_tps' => $request->input('nomor_tps'),
+            'dpt' => (int)$request->input('dpt'),
+            'dptb' => (int)$request->input('dptb'),
+            'dpk' => (int)$request->input('dpk'),
+            'pengguna_hak_pilih' => (int)$request->input('dpt') + (int)$request->input('dptb') + (int)$request->input('dpk'),
+            'suara_sah' => (int)$request->input('suara_sah'),
+            'suara_tidak_sah' => (int)$request->input('suara_tidak_sah'),
+            'suara' => (int)$request->input('suara_sah') + (int)$request->input('suara_tidak_sah'),
         ];
 
         $tps = Tps::updateOrCreate($where, $field);
@@ -80,23 +87,34 @@ class InputSuaraController extends Controller
 
         // polimorphic
         if ($request->has('id_partai')) {
-            foreach ($request->id_partai as $id_partai) {
-                KotakSuara::updateOrCreate([
-                    'id_tps' => $tps->id,
-                    'chooseable_type' => Partai::class,
-                    'chooseable_id' => $id_partai,
-                ]);
+            foreach ($request->id_partai as $id_partai => $suara) {
+                KotakSuara::updateOrCreate(
+                    [
+                        'id_tps' => $tps->id,
+                        'chooseable_type' => Partai::class,
+                        'chooseable_id' => $id_partai
+                    ],
+                    ['suara' => $suara]
+                );
+            }
+        }
+        if ($request->has('id_calon')) {
+            foreach ($request->id_calon as $id_calon => $suara) {
+                KotakSuara::updateOrCreate(
+                    [
+                        'id_tps' => $tps->id,
+                        'chooseable_type' => Calon::class,
+                        'chooseable_id' => $id_calon
+                    ],
+                    ['suara' => $suara]
+                );
             }
         }
 
-        if ($request->has('id_calon')) {
-            foreach ($request->id_calon as $id_calon) {
-                KotakSuara::updateOrCreate([
-                    'id_tps' => $tps->id,
-                    'chooseable_type' => Calon::class,
-                    'chooseable_id' => $id_calon,
-                ]);
-            }
+        if ($tps->wasRecentlyCreated) {
+            return redirect()->back()->with('success', 'Suara berhasil di tambahkan.');
+        } else {
+            return redirect()->back()->with('success', 'Suara berhasil di perbaharui.');
         }
     }
 

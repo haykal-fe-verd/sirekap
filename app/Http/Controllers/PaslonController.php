@@ -14,7 +14,7 @@ class PaslonController extends Controller
      */
     public function index()
     {
-        $partai = Partai::all();
+        $partai = Partai::orderBy('nomor', 'asc')->get();
         $data = $partai->load('calon');
 
         return Inertia::render('paslon/index', compact('data'));
@@ -33,7 +33,31 @@ class PaslonController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'nama' => 'required',
+            'nomor' => 'required',
+            'logo' => 'mimes:jpg,png|max:2048|nullable',
+        ]);
+
+        $partai = Partai::create($request->all());
+        if ($request->file('logo')) {
+            $path = $request->file('logo')->store('public/partai');
+            $partai->update([
+                'logo' => $path
+            ]);
+        }
+
+        if ($request->calon) {
+            foreach ($request->calon as $key) {
+                $partai->calon()->create([
+                    'nama' => $key['nama'],
+                    'nomor' => $key['nomor'],
+                ]);
+            }
+        }
+
+
+        return redirect()->route('paslon.index')->with('success', 'Partai dan Calon berhasil ditambahkan');
     }
 
     /**

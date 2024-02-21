@@ -10,6 +10,7 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
+import CreateModal from "./create";
 
 export default function index({ auth, data }) {
     return (
@@ -27,7 +28,8 @@ export default function index({ auth, data }) {
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                         <div className="p-6 text-gray-900">
-                            <div className="rounded-md  overflow-hidden">
+                            <div className="rounded-md overflow-hidden space-y-5">
+                                <CreateModal />
                                 <Table>
                                     <TableHeader className="bg-gray-900">
                                         <TableRow>

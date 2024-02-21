@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import ApplicationLogo from "@/Components/ApplicationLogo";
-import Dropdown from "@/Components/Dropdown";
-import NavLink from "@/Components/NavLink";
-import ResponsiveNavLink from "@/Components/ResponsiveNavLink";
 import { Link } from "@inertiajs/react";
 import { usePage } from "@inertiajs/react";
+
+import ApplicationLogo from "@/components/application-logo";
+import Dropdown from "@/components/dropdown";
+import NavLink from "@/components/navlink";
+import ResponsiveNavLink from "@/components/responsive-navlink";
 import { Toaster } from "@/components/ui/toaster";
 import { useToast } from "@/components/ui/use-toast";
 
