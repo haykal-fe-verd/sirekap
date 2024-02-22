@@ -19,18 +19,23 @@ class InputSuaraController extends Controller
     public function index(Request $request)
     {
         $tps = null;
+        $show = false;
+
         if ($request->query('id_kabupaten') && $request->query('id_kecamatan') && $request->query('id_kelurahan')) {
             $tps = Tps::where('id_kabupaten', $request->query('id_kabupaten'))
                 ->where('id_kecamatan', $request->query('id_kecamatan'))
                 ->where('id_kelurahan', $request->query('id_kelurahan'))
                 ->with('pengambilan')->get();
+
+            $show = true;
         }
 
         $partai = Partai::with('calon')->get();
         $calon = Calon::all();
 
 
-        return Inertia::render('input-suara/index', compact('partai', 'calon', 'tps'));
+
+        return Inertia::render('input-suara/index', compact('partai', 'calon', 'tps', 'show'));
     }
 
 
@@ -116,6 +121,39 @@ class InputSuaraController extends Controller
         } else {
             return redirect()->back()->with('success', 'Suara berhasil di perbaharui.');
         }
+    }
+
+    public function storeTps(Request $request)
+    {
+        $tps = Tps::findOrFail($request->input('id_tps'));
+
+        if ($request->has('id_partai')) {
+            foreach ($request->id_partai as $id_partai => $suara) {
+                KotakSuara::updateOrCreate(
+                    [
+                        'id_tps' => $tps->id,
+                        'chooseable_type' => Partai::class,
+                        'chooseable_id' => $id_partai
+                    ],
+                    ['suara' => $suara]
+                );
+            }
+        }
+
+        if ($request->has('id_calon')) {
+            foreach ($request->id_calon as $id_calon => $suara) {
+                KotakSuara::updateOrCreate(
+                    [
+                        'id_tps' => $tps->id,
+                        'chooseable_type' => Calon::class,
+                        'chooseable_id' => $id_calon
+                    ],
+                    ['suara' => $suara]
+                );
+            }
+        }
+
+        return redirect()->back()->with('success', 'Suara berhasil di ditambahkan.');
     }
 
     /**

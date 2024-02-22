@@ -4,6 +4,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\InputSuaraController;
 use App\Http\Controllers\PaslonController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\TpsController;
 use App\Http\Controllers\UserController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -46,9 +47,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('paslon', [PaslonController::class, 'index'])->name('paslon.index');
     Route::post('paslon', [PaslonController::class, 'store'])->name('paslon.store');
 
+    // tps
+    Route::post('tps', [TpsController::class, 'store'])->name('tps.store');
+
     // input suara
     Route::get('input-suara', [InputSuaraController::class, 'index'])->name('input.suara.index');
     Route::post('input-suara', [InputSuaraController::class, 'store'])->name('input.suara.store');
+    Route::post('input-suara-tps', [InputSuaraController::class, 'storeTps'])->name('input.suara.tps.store');
 });
 
 require __DIR__ . '/auth.php';
