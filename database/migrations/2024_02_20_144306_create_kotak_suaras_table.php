@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('chooseable_type');
             $table->string('chooseable_id');
             $table->index(['chooseable_type', 'chooseable_id']);
-            $table->bigInteger('suara');
+            $table->bigInteger('suara')->default(0);
         });
     }
 

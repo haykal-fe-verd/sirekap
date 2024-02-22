@@ -19,29 +19,42 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
-function FormInput({ tps, partai, calon }) {
-    console.log("🚀  tps ==>", tps);
+function FormInput({ tps, partai }) {
     //! states
-    const [data, setData] = useState({
-        id_calon: calon.reduce((acc, calonItem) => {
-            acc[calonItem.id] = 0;
-            return acc;
-        }, {}),
-        id_partai: partai.reduce((acc, partaiItem) => {
-            acc[partaiItem.id] = 0;
-            return acc;
-        }, {}),
-    });
-    console.log("🚀  data ==>", data);
+    const [perolehanSuara, setPerolehanSuara] = useState({});
 
     //! events
-    const onSubmitBtn = (id) => {
-        const payload = {
-            id_tps: id,
-            ...data,
-        };
-        router.post(route("input.suara.tps.store"), payload);
+    const onSubmitBtn = () => {
+        router.post(route("input.suara.tps.store"), perolehanSuara, {
+            onSuccess: () => {
+                setPerolehanSuara({});
+            },
+        });
     };
+
+    const handleSuaraChange = (value, id, type, tpsId) => {
+        if (type === "Partai") {
+            setPerolehanSuara((prevPerolehanSuara) => ({
+                ...prevPerolehanSuara,
+                id_tps: tpsId,
+                id_partai: {
+                    ...prevPerolehanSuara.id_partai,
+                    [id]: value,
+                },
+            }));
+        }
+        if (type === "Calon") {
+            setPerolehanSuara((prevPerolehanSuara) => ({
+                ...prevPerolehanSuara,
+                id_tps: tpsId,
+                id_calon: {
+                    ...prevPerolehanSuara.id_calon,
+                    [id]: value,
+                },
+            }));
+        }
+    };
+
     return (
         <div>
             <Accordion type="single" collapsible>
@@ -147,31 +160,30 @@ function FormInput({ tps, partai, calon }) {
                                                                     <Input
                                                                         type="number"
                                                                         defaultValue={
-                                                                            data
-                                                                                .id_partai[
-                                                                                partaiItem
-                                                                                    .id
-                                                                            ]
+                                                                            item.pengambilan.find(
+                                                                                (
+                                                                                    i
+                                                                                ) =>
+                                                                                    i.chooseable_type ===
+                                                                                        "App\\Models\\Partai" &&
+                                                                                    i.chooseable_id ===
+                                                                                        partaiItem.id.toString()
+                                                                            )
+                                                                                ?.suara ||
+                                                                            0
                                                                         }
                                                                         onChange={(
                                                                             e
-                                                                        ) => {
-                                                                            setData(
-                                                                                (
-                                                                                    data
-                                                                                ) => ({
-                                                                                    ...data,
-                                                                                    id_partai:
-                                                                                        {
-                                                                                            ...data.id_partai,
-                                                                                            [partaiItem.id]:
-                                                                                                e
-                                                                                                    .target
-                                                                                                    .value,
-                                                                                        },
-                                                                                })
-                                                                            );
-                                                                        }}
+                                                                        ) =>
+                                                                            handleSuaraChange(
+                                                                                e
+                                                                                    .target
+                                                                                    .value,
+                                                                                partaiItem.id,
+                                                                                "Partai",
+                                                                                item.id
+                                                                            )
+                                                                        }
                                                                     />
                                                                 </TableCell>
                                                             </TableRow>
@@ -191,31 +203,30 @@ function FormInput({ tps, partai, calon }) {
                                                                             <Input
                                                                                 type="number"
                                                                                 defaultValue={
-                                                                                    data
-                                                                                        .id_calon[
-                                                                                        calonItem
-                                                                                            .id
-                                                                                    ]
+                                                                                    item.pengambilan.find(
+                                                                                        (
+                                                                                            i
+                                                                                        ) =>
+                                                                                            i.chooseable_type ===
+                                                                                                "App\\Models\\Calon" &&
+                                                                                            i.chooseable_id ===
+                                                                                                calonItem.id.toString()
+                                                                                    )
+                                                                                        ?.suara ||
+                                                                                    0
                                                                                 }
                                                                                 onChange={(
                                                                                     e
-                                                                                ) => {
-                                                                                    setData(
-                                                                                        (
-                                                                                            data
-                                                                                        ) => ({
-                                                                                            ...data,
-                                                                                            id_partai:
-                                                                                                {
-                                                                                                    ...data.id_partai,
-                                                                                                    [partaiItem.id]:
-                                                                                                        e
-                                                                                                            .target
-                                                                                                            .value,
-                                                                                                },
-                                                                                        })
-                                                                                    );
-                                                                                }}
+                                                                                ) =>
+                                                                                    handleSuaraChange(
+                                                                                        e
+                                                                                            .target
+                                                                                            .value,
+                                                                                        calonItem.id,
+                                                                                        "Calon",
+                                                                                        item.id
+                                                                                    )
+                                                                                }
                                                                             />
                                                                         </TableCell>
                                                                     </TableRow>
@@ -226,8 +237,6 @@ function FormInput({ tps, partai, calon }) {
                                                 )}
                                             </TableBody>
                                         </Table>
-
-                                        <h1>Total Perolehan Suara : ""</h1>
 
                                         <Button
                                             type="button"

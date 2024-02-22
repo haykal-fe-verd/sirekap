@@ -30,6 +30,8 @@ Route::get('/', function () {
     ]);
 });
 
+Route::get('/', [DashboardController::class, 'home']);
+
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

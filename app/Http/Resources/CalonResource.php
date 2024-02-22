@@ -18,7 +18,8 @@ class CalonResource extends JsonResource
             'id' => $this->id,
             'id_partai' => $this->id_partai,
             'nama' => $this->nama,
-            'nomor' => $this->nomor
+            'nomor' => $this->nomor,
+            'suara' => $this->withSum('suara', 'suara')->where('id', $this->id)->first()->suara_sum_suara
         ];
     }
 }

@@ -31,11 +31,8 @@ class InputSuaraController extends Controller
         }
 
         $partai = Partai::with('calon')->get();
-        $calon = Calon::all();
 
-
-
-        return Inertia::render('input-suara/index', compact('partai', 'calon', 'tps', 'show'));
+        return Inertia::render('input-suara/index', compact('partai', 'tps', 'show'));
     }
 
 
@@ -115,7 +112,6 @@ class InputSuaraController extends Controller
                 );
             }
         }
-
         if ($tps->wasRecentlyCreated) {
             return redirect()->back()->with('success', 'Suara berhasil di tambahkan.');
         } else {

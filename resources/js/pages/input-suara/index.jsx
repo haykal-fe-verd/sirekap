@@ -19,7 +19,7 @@ import Filter from "./filter";
 import { cn } from "@/lib/utils";
 import FormInput from "./form-input";
 
-function index({ auth, tps, partai, calon, dataValues, show }) {
+function index({ auth, tps, partai, show }) {
     //! states
     const queryString = window.location.search;
 
@@ -37,16 +37,7 @@ function index({ auth, tps, partai, calon, dataValues, show }) {
         urlParams.get("id_kelurahan") || ""
     );
 
-    const [values, setValues] = useState({
-        id_calon: calon.reduce((acc, calonItem) => {
-            acc[calonItem.id] = 0;
-            return acc;
-        }, {}),
-        id_partai: partai.reduce((acc, partaiItem) => {
-            acc[partaiItem.id] = 0;
-            return acc;
-        }, {}),
-    });
+    const [values, setValues] = useState({});
 
     //! events
 
@@ -135,11 +126,7 @@ function index({ auth, tps, partai, calon, dataValues, show }) {
                                         </h1>
 
                                         <ModalTps values={values} />
-                                        <FormInput
-                                            tps={tps}
-                                            partai={partai}
-                                            calon={calon}
-                                        />
+                                        <FormInput tps={tps} partai={partai} />
                                     </div>
                                 </div>
                             </div>

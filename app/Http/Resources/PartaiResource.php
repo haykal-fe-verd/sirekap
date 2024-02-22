@@ -13,6 +13,9 @@ class PartaiResource extends JsonResource
      *
      * @return array<string, mixed>
      */
+    public static $wrap = null;
+
+
     public function toArray(Request $request): array
     {
         return [
@@ -20,6 +23,7 @@ class PartaiResource extends JsonResource
             'nama' => $this->nama,
             'nomor' => $this->nomor,
             'calon' => CalonResource::collection($this->calon),
+            'suara' => $this->withSum('suara', 'suara')->where('id', $this->id)->first()->suara_sum_suara
         ];
     }
 }
