@@ -29,6 +29,10 @@ class TpsController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'c1' => 'mimes:pdf|max:2048',
+        ]);
+
         $where = [
             'id_kabupaten' => $request->input('id_kabupaten'),
             'id_kabupaten' => $request->input('id_kabupaten'),
@@ -59,7 +63,7 @@ class TpsController extends Controller
             if ($tps->c1) {
                 Storage::delete($tps->c1);
             }
-            $tps->c1 = $request->file('c1')->store('public/c1');
+            $tps->c1 = $request->file('c1')->store('c1', 'public');
             $tps->save();
         }
 

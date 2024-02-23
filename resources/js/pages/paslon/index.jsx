@@ -38,7 +38,18 @@ export default function index({ auth, data }) {
                                                     key={index}
                                                     className="text-left border text-white py-6"
                                                 >
-                                                    {item.nomor}. {item.nama}
+                                                    <div className="flex flex-col justify-center items-center text-center gap-5">
+                                                        <div>
+                                                            {item.nomor}.{" "}
+                                                            {item.nama}
+                                                        </div>
+                                                        <div>
+                                                            <img
+                                                                src={`/storage/${item.logo}`}
+                                                                className="w-full h-20 rounded-md"
+                                                            />
+                                                        </div>
+                                                    </div>
                                                 </TableHead>
                                             ))}
                                         </TableRow>

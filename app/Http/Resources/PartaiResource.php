@@ -23,6 +23,7 @@ class PartaiResource extends JsonResource
             'nama' => $this->nama,
             'nomor' => $this->nomor,
             'calon' => CalonResource::collection($this->calon),
+            'logo' => $this->logo,
             'suara' => $this->withSum('suara', 'suara')->where('id', $this->id)->first()->suara_sum_suara
         ];
     }

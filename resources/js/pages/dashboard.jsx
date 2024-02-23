@@ -103,7 +103,16 @@ export default function Dashboard({
                                                     {index + 1}
                                                 </TableCell>
                                                 <TableCell>
-                                                    {`${item.nomor}. ${item.nama}`}
+                                                    <div className="flex gap-5 items-center justify-between">
+                                                        <h1>
+                                                            {`${item.nomor}. ${item.nama}`}
+                                                        </h1>
+                                                        <img
+                                                            src={`/storage/${item.logo}`}
+                                                            alt={`logo-${item.nama}`}
+                                                            className="w-6 h-6"
+                                                        />
+                                                    </div>
                                                 </TableCell>
                                                 <TableCell>
                                                     {item.suara_sum_suara}
@@ -136,7 +145,16 @@ export default function Dashboard({
                                                     {index + 1}
                                                 </TableCell>
                                                 <TableCell>
-                                                    {`${item.nama}`}
+                                                    <div className="flex gap-5 items-center justify-between">
+                                                        <h1>
+                                                            {`${item.nama}`}
+                                                        </h1>
+                                                        <img
+                                                            src={`/storage/${item.partai.logo}`}
+                                                            alt={`logo-${item.nama}`}
+                                                            className="w-6 h-6"
+                                                        />
+                                                    </div>
                                                 </TableCell>
                                                 <TableCell>
                                                     {item.suara_sum_suara}
@@ -153,9 +171,17 @@ export default function Dashboard({
                 <div className="max-w-7xl flex flex-col md:flex-row mx-auto sm:px-6 lg:px-8 md:space-x-6">
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg w-full h-fit">
                         <div className="p-6 text-gray-900 space-y-5">
-                            <h1 className="font-bold text-2xl uppercase">
-                                Dapil 1 Suara PKB
-                            </h1>
+                            <div className="flex items-center gap-5">
+                                <h1 className="font-bold text-2xl uppercase">
+                                    Dapil 1 Suara PKB
+                                </h1>
+                                <img
+                                    src={`/storage/${dapilPkb.logo}`}
+                                    alt={`logo-${dapilPkb.nama}`}
+                                    className="w-10 h-10"
+                                />
+                            </div>
+
                             <div className="border rounded-md">
                                 <Table>
                                     <TableHeader>
@@ -174,7 +200,7 @@ export default function Dashboard({
                                                     {index + 1}
                                                 </TableCell>
                                                 <TableCell className="text-nowrap">
-                                                    {`${item.nama}`}
+                                                    <h1>{`${item.nama}`}</h1>
                                                 </TableCell>
                                                 <TableCell className="flex flex-row justify-between gap-3 w-full  ">
                                                     <h2 className="text-right">

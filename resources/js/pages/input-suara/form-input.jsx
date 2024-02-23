@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { router } from "@inertiajs/react";
+import { router, Link } from "@inertiajs/react";
 
 import {
     Accordion,

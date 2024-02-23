@@ -253,7 +253,8 @@ class PaslonSeeder extends Seeder
         foreach ($dataPartai as $partaiData) {
             $partai = Partai::create([
                 'nama' => $partaiData['nama'],
-                'nomor' => $no++
+                'logo' => 'partai/' . $no . '.png',
+                'nomor' => $no++,
             ]);
 
             $nomorUrut = 1;

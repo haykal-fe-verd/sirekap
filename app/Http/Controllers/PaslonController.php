@@ -41,7 +41,7 @@ class PaslonController extends Controller
 
         $partai = Partai::create($request->all());
         if ($request->file('logo')) {
-            $path = $request->file('logo')->store('public/partai');
+            $path = $request->file('logo')->store('partai', 'public');
             $partai->update([
                 'logo' => $path
             ]);
