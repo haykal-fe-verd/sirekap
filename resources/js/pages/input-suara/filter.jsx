@@ -22,20 +22,26 @@ function Filter({
     const urlParams = new URLSearchParams(queryString);
 
     //!select
-    const optionsKabupaten = kabupaten?.map((item) => ({
-        value: item.id,
-        label: item.name,
-    }));
+    const optionsKabupaten = kabupaten
+        ?.map((item) => ({
+            value: item.id,
+            label: item.name,
+        }))
+        .sort((a, b) => a.label.localeCompare(b.label));
 
-    const optionsKecamatan = kecamatan?.map((item) => ({
-        value: item.id,
-        label: item.name,
-    }));
+    const optionsKecamatan = kecamatan
+        ?.map((item) => ({
+            value: item.id,
+            label: item.name,
+        }))
+        .sort((a, b) => a.label.localeCompare(b.label));
 
-    const optionsKelurahan = kelurahan?.map((item) => ({
-        value: item.id,
-        label: item.name,
-    }));
+    const optionsKelurahan = kelurahan
+        ?.map((item) => ({
+            value: item.id,
+            label: item.name,
+        }))
+        .sort((a, b) => a.label.localeCompare(b.label));
 
     //! events
     const onClickTampilkan = async (e) => {
