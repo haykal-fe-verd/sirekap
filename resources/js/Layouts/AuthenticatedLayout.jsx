@@ -53,16 +53,19 @@ export default function Authenticated({ user, header, children }) {
                                 >
                                     Dashboard
                                 </NavLink>
-                                <NavLink
-                                    href={route("user.index")}
-                                    active={
-                                        route().current("user.index") ||
-                                        route().current("user.create") ||
-                                        route().current("user.edit")
-                                    }
-                                >
-                                    User
-                                </NavLink>
+                                {user.role === "admin" && (
+                                    <NavLink
+                                        href={route("user.index")}
+                                        active={
+                                            route().current("user.index") ||
+                                            route().current("user.create") ||
+                                            route().current("user.edit")
+                                        }
+                                    >
+                                        User
+                                    </NavLink>
+                                )}
+
                                 <NavLink
                                     href={route("paslon.index")}
                                     active={route().current("paslon.index")}
@@ -181,16 +184,19 @@ export default function Authenticated({ user, header, children }) {
                         >
                             Dashboard
                         </ResponsiveNavLink>
-                        <ResponsiveNavLink
-                            href={route("user.index")}
-                            active={
-                                route().current("user.index") ||
-                                route().current("user.edit") ||
-                                route().current("user.create")
-                            }
-                        >
-                            User
-                        </ResponsiveNavLink>
+                        {user.role === "admin" && (
+                            <ResponsiveNavLink
+                                href={route("user.index")}
+                                active={
+                                    route().current("user.index") ||
+                                    route().current("user.edit") ||
+                                    route().current("user.create")
+                                }
+                            >
+                                User
+                            </ResponsiveNavLink>
+                        )}
+
                         <ResponsiveNavLink
                             href={route("paslon.index")}
                             active={route().current("paslon.index")}

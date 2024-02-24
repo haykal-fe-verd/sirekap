@@ -38,16 +38,16 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
 
     // user
-    Route::get('user', [UserController::class, 'index'])->name('user.index');
-    Route::get('user/create', [UserController::class, 'create'])->name('user.create');
-    Route::post('user', [UserController::class, 'store'])->name('user.store');
-    Route::get('user/{id}/edit', [UserController::class, 'edit'])->name('user.edit');
-    Route::put('user/{id}', [UserController::class, 'update'])->name('user.update');
-    Route::delete('user/{id}', [UserController::class, 'destroy'])->name('user.destroy');
+    Route::get('user', [UserController::class, 'index'])->middleware('can:admin')->name('user.index');
+    Route::get('user/create', [UserController::class, 'create'])->middleware('can:admin')->name('user.create');
+    Route::post('user', [UserController::class, 'store'])->middleware('can:admin')->name('user.store');
+    Route::get('user/{id}/edit', [UserController::class, 'edit'])->middleware('can:admin')->name('user.edit');
+    Route::put('user/{id}', [UserController::class, 'update'])->middleware('can:admin')->name('user.update');
+    Route::delete('user/{id}', [UserController::class, 'destroy'])->middleware('can:admin')->name('user.destroy');
 
     // partai dan calon
     Route::get('paslon', [PaslonController::class, 'index'])->name('paslon.index');
-    Route::post('paslon', [PaslonController::class, 'store'])->name('paslon.store');
+    Route::post('paslon', [PaslonController::class, 'store'])->middleware('can:admin')->name('paslon.store');
 
     // tps
     Route::post('tps', [TpsController::class, 'store'])->name('tps.store');

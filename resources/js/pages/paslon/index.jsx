@@ -29,7 +29,7 @@ export default function index({ auth, data }) {
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                         <div className="p-6 text-gray-900">
                             <div className="rounded-md overflow-hidden space-y-5">
-                                <CreateModal />
+                                {auth.user.role === "admin" && <CreateModal />}
                                 <Table>
                                     <TableHeader className="bg-gray-900">
                                         <TableRow>
